@@ -82,12 +82,12 @@ while(True):
         if(df.iloc[i]['imei']!='868996034800649'):
             im,pm25,pm10,timestamp=live_pm(df.iloc[i]['imei'])
             lat=df.iloc[i]['lat']
-            long=df.iloc[i]['long']
-            values.append((timestamp,im,pm25,pm10,lat,long))
+            longi=df.iloc[i]['long']
+            values.append((timestamp,im,pm25,pm10,lat,longi))
             conn.execute("INSERT INTO CAMPUS_PM                               VALUES (?,?,?,?,?,?)",values[-1])
             print("Row inserted:- "+ str(values[-1]))
     conn.commit()
-    time.sleep(100)
+    time.sleep(600)
 
 
 # In[ ]:
