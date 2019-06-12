@@ -1,6 +1,8 @@
 
 <!DOCTYPE html>
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <head>
     
     <title>IIT-Gn Live Air Quality</title>
@@ -13,20 +15,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 
     <script src="leaflet-idw.js"></script>
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
     
 </head>
 <body>
-
-
-<div id="mapid" style="width: 600px; height: 400px;"></div>
+<div id="mapid", style="width: 800px; height: 400px;"></div>
 <div id="x"></div>
-
 
 <script >
 var img = document.createElement("img");
-img.src = "colorbar.png";
-img.style="max-width: 600px;"
+img.src = "final_bar.png";
+img.style="max-width: 800px;"
 var src = document.getElementById("x");
 src.appendChild(img);
 </script>
@@ -61,6 +63,8 @@ src.appendChild(img);
     ];
 
     var mymap = L.map('mapid').setView([23.209879, 72.687270], 15);
+    var geojsonFeature = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[72.68357276916505,23.205279935790397],[72.68563270568849,23.20458967360876],[72.68719911575319,23.204708004521652],[72.68840074539185,23.206916828998043],[72.69112586975099,23.210545532808847],[72.69138336181642,23.21194571282164],[72.69271373748781,23.214272740101464],[72.69088983535768,23.214884071053557],[72.69041776657106,23.214410782819048],[72.6900315284729,23.21464742714592],[72.69020318984987,23.215022113139447],[72.68953800201417,23.215377077848093],[72.68943071365358,23.215298196883232],[72.68968820571901,23.215022113139447],[72.6895594596863,23.214824910115947],[72.68943071365358,23.21486435074394],[72.68919467926027,23.214588266103505],[72.6888942718506,23.214686867826302],[72.68895864486694,23.214943231964973],[72.68906593322755,23.215120714542014],[72.68893718719482,23.215239036129024],[72.68895864486694,23.215416518313035],[72.68863677978516,23.215416518313035],[72.68812179565431,23.215120714542014],[72.6874351501465,23.21565316085825],[72.68756389617921,23.2160278440308],[72.68728494644165,23.216737767159756],[72.68709182739259,23.216737767159756],[72.68683433532716,23.216244765387167],[72.68593311309816,23.216225045278417],[72.68513917922974,23.21571232142904],[72.68447399139406,23.214824910115947],[72.68299341201784,23.213582524373862],[72.68271446228027,23.212517613113143],[72.68262863159181,23.21151185579508],[72.68331527709962,23.211393530906946],[72.68327236175539,23.2095003184458],[72.68230676651002,23.209618645010508],[72.68222093582153,23.20902701113908],[72.68219947814943,23.208395932122254],[72.68447399139406,23.20735070094461],[72.68417358398439,23.206759057031853],[72.68361568450929,23.206561841812174],[72.68357276916505,23.205279935790397]]]}}]}
+    L.geoJSON(geojsonFeature).addTo(mymap);
     // L.tileLayer(
     // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     // ).addTo(mymap);
@@ -147,25 +151,30 @@ setInterval(function() {
 //   'idw': idw
 // };
 // L.control.layers(null, overlays).addTo(mymap);
-    
+    var idw;
     document.getElementById("myCheckbox").onclick = function() {
     if (this.checked) {
         var meteoPoints = [
-            [ 23.21258170523464 , 72.69130825996399, 35], //Gate 1
-            [23.205122161891754, 72.68438816070555 , 25], //Gate 3
-            [ 23.214824910115947 ,72.68479585647583, 12], //2 degree cafe
+            [ 23.21258170523464 , 72.69130825996399, 40], //Gate 1
+            [23.205122161891754, 72.68438816070555 , 32], //Gate 3
+            [ 23.214824910115947 ,72.68479585647583, 7], //2 degree cafe
             [ 23.21034832317748, 72.69041776657104, 10], //Gate 2
         ];
-    var idw =L.idwLayer(meteoPoints,{
-        opacity: 0.6,
+    idw =L.idwLayer(meteoPoints,{
+        opacity: 0.7    ,
         maxZoom: 15,
-        cellSize: 10,
-        exp: 1,
+        cellSize: 3,
+        exp: 2,
         max: 40
-    }).addTo(mymap);
+    });
+
+    idw.addTo(mymap);
     }
     else {
-                idw.remove();
+        //alert(idw); 
+        mymap.removeLayer(idw);
+                // alert("hello");
+                //idw.remove();
          }
     }
 </script>
