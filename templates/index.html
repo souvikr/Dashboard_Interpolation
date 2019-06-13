@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+    
+    <title>IIT-Gn Live Air Quality</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+    <script src="../static/leaflet-idw.js"></script>
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+    
+</head>
+<body>
+<div id="mapid", style="width: 800px; height: 400px;"></div>
+<div id="x"></div>
+
+<script >
+        var img = document.createElement("img");
+    img.src = "../static/final_bar.png";
+img.style="max-width: 800px;"
+var src = document.getElementById("x");
+src.appendChild(img);
+
+</script>
+
+<script>
+    
+    var mymap = L.map('mapid').setView([23.209879, 72.687270], 15);
+    var geojsonFeature = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[[72.68357276916505,23.205279935790397],[72.68563270568849,23.20458967360876],[72.68719911575319,23.204708004521652],[72.68840074539185,23.206916828998043],[72.69112586975099,23.210545532808847],[72.69138336181642,23.21194571282164],[72.69271373748781,23.214272740101464],[72.69088983535768,23.214884071053557],[72.69041776657106,23.214410782819048],[72.6900315284729,23.21464742714592],[72.69020318984987,23.215022113139447],[72.68953800201417,23.215377077848093],[72.68943071365358,23.215298196883232],[72.68968820571901,23.215022113139447],[72.6895594596863,23.214824910115947],[72.68943071365358,23.21486435074394],[72.68919467926027,23.214588266103505],[72.6888942718506,23.214686867826302],[72.68895864486694,23.214943231964973],[72.68906593322755,23.215120714542014],[72.68893718719482,23.215239036129024],[72.68895864486694,23.215416518313035],[72.68863677978516,23.215416518313035],[72.68812179565431,23.215120714542014],[72.6874351501465,23.21565316085825],[72.68756389617921,23.2160278440308],[72.68728494644165,23.216737767159756],[72.68709182739259,23.216737767159756],[72.68683433532716,23.216244765387167],[72.68593311309816,23.216225045278417],[72.68513917922974,23.21571232142904],[72.68447399139406,23.214824910115947],[72.68299341201784,23.213582524373862],[72.68271446228027,23.212517613113143],[72.68262863159181,23.21151185579508],[72.68331527709962,23.211393530906946],[72.68327236175539,23.2095003184458],[72.68230676651002,23.209618645010508],[72.68222093582153,23.20902701113908],[72.68219947814943,23.208395932122254],[72.68447399139406,23.20735070094461],[72.68417358398439,23.206759057031853],[72.68361568450929,23.206561841812174],[72.68357276916505,23.205279935790397]]]}}]}
+    L.geoJSON(geojsonFeature).addTo(mymap);
+    // L.tileLayer(
+    // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    // ).addTo(mymap);
+var carto = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+}).addTo(mymap);
+
+
+
+
+var m1 = L.marker(["23.21258170523464", "72.69130825996399"]).addTo(mymap);
+var m2 = L.marker(["23.205122161891754", "72.68438816070555"]).addTo(mymap);
+var m3 = L.marker(["23.214824910115947", "72.68479585647583"]).addTo(mymap);
+var m4 = L.marker(["23.21034832317748", "72.69041776657104"]).addTo(mymap);
+
+
+// var center = [23.21482491011, 72.6847958564];
+// var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sydney_Opera_House_-_Dec_2008.jpg/1024px-Sydney_Opera_House_-_Dec_2008.jpg',
+// imageBounds = [center, [23.3, 73.1]];
+
+// L.imageOverlay(imageUrl, imageBounds).addTo(mymap);
+
+function plot_marker(data){
+    for(var i=0;i<=data.length;i++)
+    L.marker([data[i]["lat"], data[i]["long"]]).addTo(mymap)
+        .bindPopup(data[i]["pm"]).openPopup();
+    }
+function parseJSON(string){
+   var p_json = JSON.parse(string);
+   var l = Object.keys(p_json).length;
+    // var m1 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
+        m3.bindPopup("Time Updated: "+p_json[l-1]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-1]["PM25_CONC"]);
+    // var m2 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
+        m1.bindPopup("Time Updated: "+p_json[l-2]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-2]["PM25_CONC"]);
+    // var m3 = L.marker([p_json[l-3]["LAT"], p_json[l-3]["LONG"]]).addTo(mymap)
+        m2.bindPopup("Time Updated: "+p_json[l-3]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-3]["PM25_CONC"]);
+    // var m4 = L.marker([p_json[l-4]["LAT"], p_json[l-4]["LONG"]]).addTo(mymap)
+        m4.bindPopup("Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-4]["PM25_CONC"]);
+    m1.on('mouseover',function(){ m1.openPopup()
+    });
+    m2.on('mouseover',function(){ m2.openPopup()
+    });
+    m3.on('mouseover',function(){ m3.openPopup()
+    });
+    m4.on('mouseover',function(){ m4.openPopup()
+    });
+}
+
+//plot_marker(data);
+
+    // var popup = L.popup()
+    // .setLatLng([23.21034832317748, 72.69041776657104])
+    // .setContent("I am a standalone popup.")
+    // .openOn(mymap);
+
+</script>
+
+
+<script>
+    console.log('{{data}}')
+    $(function() {
+        // var flask = '{{data}}';
+        var flask = "http://10.0.137.171:5010/json_dump";
+        function get_data(){
+           
+        $.get(flask, function(data, status){
+          //plot_marker(data);
+          parseJSON(data)
+        });
+  };
+ get_data()
+setInterval(function() {
+   //if(mymap)
+   get_data();
+}, 15000);
+    });
+
+</script>
+
+<label><input type="checkbox" id="myCheckbox" />Add HeatMap</label>
+<script>
+// var overlays = {
+//   'carto_db': carto,
+//   'idw': idw
+// };
+// L.control.layers(null, overlays).addTo(mymap);
+    var idw;
+    document.getElementById("myCheckbox").onclick = function() {
+    if (this.checked) {
+        var meteoPoints = [
+            [ 23.21258170523464 , 72.69130825996399, 40], //Gate 1
+            [23.205122161891754, 72.68438816070555 , 32], //Gate 3
+            [ 23.214824910115947 ,72.68479585647583, 7], //2 degree cafe
+            [ 23.21034832317748, 72.69041776657104, 10], //Gate 2
+        ];
+    idw =L.idwLayer(meteoPoints,{
+        opacity: 0.7    ,
+        maxZoom: 15,
+        cellSize: 3,
+        exp: 2,
+        max: 40
+    });
+
+    idw.addTo(mymap);
+    }
+    else {
+        //alert(idw); 
+        mymap.removeLayer(idw);
+                // alert("hello");
+                //idw.remove();
+         }
+    }
+</script>
+</body>
+</html>

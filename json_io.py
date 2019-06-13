@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-from flask import Flask
+from flask import Flask,render_template
 import json
 from flask_cors import CORS
 
@@ -15,6 +15,10 @@ CORS(app)
 
 
 @app.route("/")
+def index():
+	return render_template('index.html')
+
+@app.route("/json_dump")
 def output():
 	conn2 = sqlite3.connect('pm_database2.db')
 	new_df = pd.read_sql_query("SELECT * FROM CAMPUS_PM",conn2)
@@ -26,6 +30,12 @@ def output():
 	size = len(l)
 	last_10_values = l[size-10:size]
 	return json.dumps(last_10_values)
+
+
+# @app.route("/")
+# def index():
+# 	render_template('index.html')
+
 	
 
 # @app.route("/",methods=['GET', 'POST'])
@@ -33,4 +43,4 @@ def output():
 # 	send_me = live_pm(df.iloc[i]['imei']) #popup that is being updated
 
 if __name__ == "__main__":
-	app.run()
+	app.run(host='0.0.0.0',port=5010)
