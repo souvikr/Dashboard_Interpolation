@@ -67,7 +67,7 @@ def live_pm(imei):
 # In[6]:
 
 
-df = pd.read_csv('campus.csv')
+df = pd.read_csv('campus.csv', error_bad_lines=False)
 df['imei']=df['imei'].astype('str')
 df['lat']=df['lat'].astype('str')
 df['long']=df['long'].astype('str')
