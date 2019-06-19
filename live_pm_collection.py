@@ -79,7 +79,6 @@ df['long']=df['long'].astype('str')
 while(True):
     values = []
     for i in range(len(df)):
-        if(df.iloc[i]['imei']!='868996034800649'):
             im,pm25,pm10,timestamp=live_pm(df.iloc[i]['imei'])
             lat=df.iloc[i]['lat']
             longi=df.iloc[i]['long']
