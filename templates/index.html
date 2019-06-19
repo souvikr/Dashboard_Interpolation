@@ -4,6 +4,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
     <title>IIT-Gn Live Air Quality</title>
 
@@ -15,6 +19,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 
     <script src="../static/leaflet-idw.js"></script>
+    	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		#mapid {
+			width: 800px;
+			height: 400px;
+		}
+	</style>
+
+	<style>body { padding: 0; margin: 0; } #mapid {  position:center; height: 60%; width: 70%;}</style>
+
 <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
@@ -22,17 +39,21 @@
     
 </head>
 <body>
-<div id="mapid", style="width: 800px; height: 400px;"></div>
-<div id="x"></div>
+<div id='mapid'></div>
+<!-- <div id="x"></div> -->
+<div class="container">          
+  <img src="../static/final_bar.PNG" class="img-fluid" alt="Chania" width=70% height=80%> 
+</div>
 
-<script >
+<!-- <script class="img-responsive" alt="Cinque Terre">
         var img = document.createElement("img");
-    img.src = "../static/final_bar.PNG";
+    img.src = "../static/final_bar.png";
 img.style="max-width: 800px;"
 var src = document.getElementById("x");
 src.appendChild(img);
 
-</script>
+
+</script> -->
 
 <script>
     
@@ -51,10 +72,12 @@ var carto = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{
 
 
 
-var m1 = L.marker(["23.21258170523464", "72.69130825996399"]).addTo(mymap);
-var m2 = L.marker(["23.205122161891754", "72.68438816070555"]).addTo(mymap);
-var m3 = L.marker(["23.214824910115947", "72.68479585647583"]).addTo(mymap);
-var m4 = L.marker(["23.21034832317748", "72.69041776657104"]).addTo(mymap);
+var m1 = L.marker(["23.21258170523464", "72.69130825996399"]).addTo(mymap); // Gate 1
+var m2 = L.marker(["23.205122161891754", "72.68438816070555"]).addTo(mymap); //Gate 3
+var m3 = L.marker(["23.214824910115947", "72.68479585647583"]).addTo(mymap); // 2 degree
+var m4 = L.marker(["23.21034832317748", "72.69041776657104"]).addTo(mymap); //Gate 2
+var m5 = L.marker(["23.213193043925088", "72.68391609191895"]).addTo(mymap); // Lal Minar Canteen
+
 
 
 // var center = [23.21482491011, 72.6847958564];
@@ -72,13 +95,14 @@ function parseJSON(string){
    var p_json = JSON.parse(string);
    var l = Object.keys(p_json).length;
     // var m1 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
-        m3.bindPopup("Time Updated: "+p_json[l-1]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-1]["PM25_CONC"]);
+        m3.bindPopup("2-degree Cafe top floor"+"<br/>Time Updated: "+p_json[l-1]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-1]["PM25_CONC"]);
     // var m2 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
-        m1.bindPopup("Time Updated: "+p_json[l-2]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-2]["PM25_CONC"]);
+        m1.bindPopup("Gate 1"+"<br/>Time Updated: "+p_json[l-2]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-2]["PM25_CONC"]);
     // var m3 = L.marker([p_json[l-3]["LAT"], p_json[l-3]["LONG"]]).addTo(mymap)
-        m2.bindPopup("Time Updated: "+p_json[l-3]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-3]["PM25_CONC"]);
+        m2.bindPopup("Gate 3"+"<br/>Time Updated: "+p_json[l-3]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-3]["PM25_CONC"]);
     // var m4 = L.marker([p_json[l-4]["LAT"], p_json[l-4]["LONG"]]).addTo(mymap)
-        m4.bindPopup("Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-4]["PM25_CONC"]);
+        m5.bindPopup("Lal Minar Canteen"+"<br/>Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-4]["PM25_CONC"]);
+        m4.bindPopup("Gate 2"+"<br/>Time Updated: "+p_json[l-5]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-5]["PM25_CONC"]);
     m1.on('mouseover',function(){ m1.openPopup()
     });
     m2.on('mouseover',function(){ m2.openPopup()
@@ -86,6 +110,8 @@ function parseJSON(string){
     m3.on('mouseover',function(){ m3.openPopup()
     });
     m4.on('mouseover',function(){ m4.openPopup()
+    });
+    m5.on('mouseover',function(){ m5.openPopup()
     });
 }
 
@@ -100,7 +126,6 @@ function parseJSON(string){
 
 
 <script>
-    console.log('{{data}}')
     $(function() {
         // var flask = '{{data}}';
         var flask = "http://10.0.137.171:5010/json_dump";
@@ -109,6 +134,7 @@ function parseJSON(string){
         $.get(flask, function(data, status){
           //plot_marker(data);
           parseJSON(data)
+          get_values(data)
         });
   };
  get_data()
@@ -127,21 +153,32 @@ setInterval(function() {
 //   'idw': idw
 // };
 // L.control.layers(null, overlays).addTo(mymap);
-    var idw;
+    var idw,two_degree,gate1,gate3,gate2,lal_minar;
+       function get_values(string){
+    	var p_json = JSON.parse(string);
+    	var l = Object.keys(p_json).length;
+    	two_degree = parseInt(p_json[l-1]["PM25_CONC"],10);
+    	gate1 = parseInt(p_json[l-2]["PM25_CONC"],10);
+    	gate3 = parseInt(p_json[l-3]["PM25_CONC"],10);
+    	lal_minar = parseInt(p_json[l-4]["PM25_CONC"],10);
+    	gate2 = parseInt(p_json[l-5]["PM25_CONC"],10);
+    	console.log(gate2)
+    }
     document.getElementById("myCheckbox").onclick = function() {
     if (this.checked) {
         var meteoPoints = [
-            [ 23.21258170523464 , 72.69130825996399, 40], //Gate 1
-            [23.205122161891754, 72.68438816070555 , 32], //Gate 3
-            [ 23.214824910115947 ,72.68479585647583, 7], //2 degree cafe
-            [ 23.21034832317748, 72.69041776657104, 10], //Gate 2
+            [ 23.21258170523464 , 72.69130825996399, gate1], //Gate 1
+            [23.205122161891754, 72.68438816070555 , gate3], //Gate 3
+            [ 23.214824910115947 ,72.68479585647583, two_degree], //2 degree cafe
+            [ 23.21034832317748, 72.69041776657104, gate2], //Gate 2
+            [23.213193043925088, 72.68391609191895, lal_minar], //Lal Minar
         ];
     idw =L.idwLayer(meteoPoints,{
-        opacity: 0.7    ,
+        opacity: 0.6    ,
         maxZoom: 15,
         cellSize: 3,
         exp: 2,
-        max: 40
+        max: 50
     });
 
     idw.addTo(mymap);
