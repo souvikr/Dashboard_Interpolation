@@ -5,6 +5,7 @@
 
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet"> -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -42,7 +43,7 @@
 <div id='mapid'></div>
 <!-- <div id="x"></div> -->
 <div class="container">          
-  <img src="../static/final_bar.PNG" class="img-fluid" alt="Chania" width=70% height=80%> 
+  <img src="../static/final_bar.PNG" class="img-fluid" alt="Chania" width=60% height=50%> 
 </div>
 
 <!-- <script class="img-responsive" alt="Cinque Terre">
@@ -95,14 +96,14 @@ function parseJSON(string){
    var p_json = JSON.parse(string);
    var l = Object.keys(p_json).length;
     // var m1 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
-        m3.bindPopup("2-degree Cafe top floor"+"<br/>Time Updated: "+p_json[l-1]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-1]["PM25_CONC"]);
+        m3.bindPopup("<div style='font-size:15px;font-family:Impact'>2-degree Cafe top floor"+"<br/>Time Updated: "+p_json[l-1]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-1]["PM25_CONC"]+"</div>");
     // var m2 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
-        m1.bindPopup("Gate 1"+"<br/>Time Updated: "+p_json[l-2]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-2]["PM25_CONC"]);
+        m1.bindPopup("<div style='font-size:15px;font-family:Impact'>Gate 1"+"<br/>Time Updated: "+p_json[l-2]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-2]["PM25_CONC"]+"</div>");
     // var m3 = L.marker([p_json[l-3]["LAT"], p_json[l-3]["LONG"]]).addTo(mymap)
-        m2.bindPopup("Gate 3"+"<br/>Time Updated: "+p_json[l-3]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-3]["PM25_CONC"]);
+        m2.bindPopup("<div style='font-size:15px;font-family:Impact'>Gate 3"+"<br/>Time Updated: "+p_json[l-3]["TIMESTAMP"]+"<br/>PM<sub>2.5</sub> value: "+p_json[l-3]["PM25_CONC"]+"</div>");
     // var m4 = L.marker([p_json[l-4]["LAT"], p_json[l-4]["LONG"]]).addTo(mymap)
-        m5.bindPopup("Lal Minar Canteen"+"<br/>Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-4]["PM25_CONC"]);
-        m4.bindPopup("Gate 2"+"<br/>Time Updated: "+p_json[l-5]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-5]["PM25_CONC"]);
+        m5.bindPopup("<div style='font-size:15px;font-family:Impact'>Lal Minar Canteen"+"<br/>Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-4]["PM25_CONC"]+"</div>");
+        m4.bindPopup("<div style='font-size:15px;font-family:Impact'>Gate 2"+"<br/>Time Updated: "+p_json[l-5]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-5]["PM25_CONC"]+"</div>");
     m1.on('mouseover',function(){ m1.openPopup()
     });
     m2.on('mouseover',function(){ m2.openPopup()
@@ -178,7 +179,7 @@ setInterval(function() {
         maxZoom: 15,
         cellSize: 3,
         exp: 2,
-        max: 50
+        max: 100
     });
 
     idw.addTo(mymap);
