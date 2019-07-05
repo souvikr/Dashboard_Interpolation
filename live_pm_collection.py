@@ -67,7 +67,7 @@ def live_pm(imei):
 # In[6]:
 
 
-df = pd.read_csv('campus.csv', error_bad_lines=False)
+df = pd.read_csv('campus.csv')
 df['imei']=df['imei'].astype('str')
 df['lat']=df['lat'].astype('str')
 df['long']=df['long'].astype('str')
@@ -80,11 +80,12 @@ while(True):
     values = []
     for i in range(len(df)):
             im,pm25,pm10,timestamp=live_pm(df.iloc[i]['imei'])
-            lat=df.iloc[i]['lat']
-            longi=df.iloc[i]['long']
-            values.append((timestamp,im,pm25,pm10,lat,longi))
-            conn.execute("INSERT INTO CAMPUS_PM                               VALUES (?,?,?,?,?,?)",values[-1])
-            print("Row inserted:- "+ str(values[-1]))
+            if(timestamp!=0):
+                lat=df.iloc[i]['lat']
+                longi=df.iloc[i]['long']
+                values.append((timestamp,im,pm25,pm10,lat,longi))
+                conn.execute("INSERT INTO CAMPUS_PM                               VALUES (?,?,?,?,?,?)",values[-1])
+                print("Row inserted:- "+ str(values[-1]))
     conn.commit()
     time.sleep(600)
 

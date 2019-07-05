@@ -77,7 +77,7 @@ var m1 = L.marker(["23.21258170523464", "72.69130825996399"]).addTo(mymap); // G
 var m2 = L.marker(["23.205122161891754", "72.68438816070555"]).addTo(mymap); //Gate 3
 var m3 = L.marker(["23.214824910115947", "72.68479585647583"]).addTo(mymap); // 2 degree
 var m4 = L.marker(["23.21034832317748", "72.69041776657104"]).addTo(mymap); //Gate 2
-var m5 = L.marker(["23.213193043925088", "72.68391609191895"]).addTo(mymap); // Lal Minar Canteen
+// var m5 = L.marker(["23.213193043925088", "72.68391609191895"]).addTo(mymap); // Lal Minar Canteen
 
 
 
@@ -96,14 +96,14 @@ function parseJSON(string){
    var p_json = JSON.parse(string);
    var l = Object.keys(p_json).length;
     // var m1 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
-        m3.bindPopup("<div style='font-size:15px;font-family:Impact'>2-degree Cafe top floor"+"<br/>Time Updated: "+p_json[l-1]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-1]["PM25_CONC"]+"</div>");
+        m3.bindPopup("<div style='font-size:15px;font-family:Helvetica'>2-degree Cafe top floor"+"<br/>Time Updated: "+p_json[l-1]["TIMESTAMP"]+"<br/>PM<sub>2.5</sub> value: "+p_json[l-1]["PM25_CONC"]+"</div>");
     // var m2 = L.marker([p_json[l-2]["LAT"], p_json[l-2]["LONG"]]).addTo(mymap)
-        m1.bindPopup("<div style='font-size:15px;font-family:Impact'>Gate 1"+"<br/>Time Updated: "+p_json[l-2]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-2]["PM25_CONC"]+"</div>");
+        m1.bindPopup("<div style='font-size:15px;font-family:Helvetica'>Gate 1"+"<br/>Time Updated: "+p_json[l-2]["TIMESTAMP"]+"<br/>PM<sub>2.5</sub> value: "+p_json[l-2]["PM25_CONC"]+"</div>");
     // var m3 = L.marker([p_json[l-3]["LAT"], p_json[l-3]["LONG"]]).addTo(mymap)
-        m2.bindPopup("<div style='font-size:15px;font-family:Impact'>Gate 3"+"<br/>Time Updated: "+p_json[l-3]["TIMESTAMP"]+"<br/>PM<sub>2.5</sub> value: "+p_json[l-3]["PM25_CONC"]+"</div>");
+        m2.bindPopup("<div style='font-size:15px;font-family:Helvetica'>Gate 3"+"<br/>Time Updated: "+p_json[l-3]["TIMESTAMP"]+"<br/>PM<sub>2.5</sub> value: "+p_json[l-3]["PM25_CONC"]+"</div>");
     // var m4 = L.marker([p_json[l-4]["LAT"], p_json[l-4]["LONG"]]).addTo(mymap)
-        m5.bindPopup("<div style='font-size:15px;font-family:Impact'>Lal Minar Canteen"+"<br/>Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-4]["PM25_CONC"]+"</div>");
-        m4.bindPopup("<div style='font-size:15px;font-family:Impact'>Gate 2"+"<br/>Time Updated: "+p_json[l-5]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-5]["PM25_CONC"]+"</div>");
+    //    m5.bindPopup("<div style='font-size:15px;font-family:Impact'>Lal Minar Canteen"+"<br/>Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM2.5 value: "+p_json[l-4]["PM25_CONC"]+"</div>");
+        m4.bindPopup("<div style='font-size:15px;font-family:Helvetica'>Gate 2"+"<br/>Time Updated: "+p_json[l-4]["TIMESTAMP"]+"<br/>PM<sub>2.5</sub> value: "+p_json[l-4]["PM25_CONC"]+"</div>");
     m1.on('mouseover',function(){ m1.openPopup()
     });
     m2.on('mouseover',function(){ m2.openPopup()
@@ -111,8 +111,6 @@ function parseJSON(string){
     m3.on('mouseover',function(){ m3.openPopup()
     });
     m4.on('mouseover',function(){ m4.openPopup()
-    });
-    m5.on('mouseover',function(){ m5.openPopup()
     });
 }
 
@@ -161,9 +159,7 @@ setInterval(function() {
     	two_degree = parseInt(p_json[l-1]["PM25_CONC"],10);
     	gate1 = parseInt(p_json[l-2]["PM25_CONC"],10);
     	gate3 = parseInt(p_json[l-3]["PM25_CONC"],10);
-    	lal_minar = parseInt(p_json[l-4]["PM25_CONC"],10);
-    	gate2 = parseInt(p_json[l-5]["PM25_CONC"],10);
-    	console.log(gate2)
+    	gate2 = parseInt(p_json[l-4]["PM25_CONC"],10);
     }
     document.getElementById("myCheckbox").onclick = function() {
     if (this.checked) {
@@ -172,7 +168,6 @@ setInterval(function() {
             [23.205122161891754, 72.68438816070555 , gate3], //Gate 3
             [ 23.214824910115947 ,72.68479585647583, two_degree], //2 degree cafe
             [ 23.21034832317748, 72.69041776657104, gate2], //Gate 2
-            [23.213193043925088, 72.68391609191895, lal_minar], //Lal Minar
         ];
     idw =L.idwLayer(meteoPoints,{
         opacity: 0.6    ,
